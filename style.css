@@ -1,0 +1,38 @@
+body {
+    text-align:center;
+    background-color:aquamarine;
+}
+.button {
+    background-color:blue;
+    color:rgb(127, 210, 238);
+    border-radius:15px;
+    border:2px solid aqua;
+}
+.text {
+    color:blue;
+    font-weight:bold;
+    font-family:arial;
+}
+.container {
+    background-color:aqua;
+    width:400px;
+    height:400px;
+}
+.output {
+    color:red;
+    font-weight:bold;
+    font-family:arial;
+}
+.header {
+    background-color:skyblue;
+    border-radius:15px;
+    box-shadow:5px 5px 38px skyblue;
+}
+#webcamouter {
+    background-color:skyblue;
+    border-radius:15px;
+    box-shadow:5px 5px 38px skyblue;
+}
+#camera {
+    border-radius:15px;
+}

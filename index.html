@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <title>Nueral networks project</title>
+    <link href="style.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"
+        integrity="sha512-dQIiHSl2hr3NWKKLycPndtpbh5iaHLo6MwrXm7F0FM5e+kL2U16oE9uIwPHUl6fQBeCthiEuV/rzP3MiAB8Vfw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <h2 class='text'>Nueral Networks Project</h2>
+    </div>
+    <br><br>
+    <div id="webcamouter">
+        <h3 class='text'>Webcam view -</h3><br><br>
+        <center>
+            <div id="camera">
+                <p class="text">Click the "Start webcam" button twice to start the camera.</p>
+            </div>
+        </center>
+    </div>
+    <br><br>
+    <div id="result"></div>
+    <p class='output'>Object name:
+    <p id="result_object_name" class='output'></p>
+    </p>
+    <p class='output'>Object accuracy:
+    <p id="result_object_accuracy" class='output'></p>
+    </p>
+    <br><br>
+    <span class='container'>
+        <button onclick="allow();" class='button'>Start webcam</button>
+        <button onclick="snap();" class='button'>Snap</button>
+        <button onclick="check();" class='button'>Identify IMAGE</button>
+    </span>
+
+    <script>
+var percent = 0;
+        var camera = document.getElementById("camera");
+        var classifier = ml5.imageClassifier('https://storage.googleapis.com/tm-model/ufsqch8YU/model.json',modelLoaded);
+        function modelLoaded() {
+            console.log("Model is loaded");
+        }
+        function allow() {
+            Webcam.attach(camera);
+            Webcam.set({
+                width: 350,
+                height: 300,
+                image_format: 'png',
+                png_quality: 90
+            });
+        }
+        function snap() {
+            Webcam.snap(function (data_uri) {
+                document.getElementById("result").innerHTML = '<img id = "captured_image" src = "' + data_uri + '"/>';
+            });
+        }
+        function check() {
+            img = document.getElementById("captured_image");
+            classifier.classify(img, gotResult);
+        }
+        function gotResult(error, results) {
+            if (error) {
+                console.error(error);
+                console.log("error found");
+            } else {
+                percent = results[0].confidence / 1 * 100;
+                console.log(results)
+                document.getElementById("result_object_name").innerHTML = results[0].label;
+                document.getElementById("result_object_accuracy").innerHTML = Math.floor(percent) + "%";
+
+            }
+        }
+    </script>
+</body>
+
+</html>
